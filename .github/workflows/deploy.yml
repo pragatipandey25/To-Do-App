@@ -18,9 +18,14 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
       - name: Prepare static site
         run: |
@@ -31,6 +36,14 @@ jobs:
           cp script.js dist/
           touch dist/.nojekyll
 
+      - name: Verify static site contents
+        run: |
+          ls -la dist
+          test -f dist/index.html
+          test -f dist/todo.html
+          test -f dist/todo.css
+          test -f dist/script.js
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -38,14 +51,14 @@ jobs:
 
   deploy:
     needs: build
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
