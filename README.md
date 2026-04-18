@@ -26,6 +26,8 @@ This repository now includes an automated GitHub Pages workflow at [.github/work
 4. In **Source**, select **GitHub Actions**.
 5. Wait for the **Deploy to GitHub Pages** workflow to finish under the **Actions** tab.
 
+If deployment fails, re-check **Settings > Pages > Source** is set to **GitHub Actions** (not **Deploy from a branch**).
+
 Your site URL will be:
 
 `https://pragatipandey25.github.io/To-Do-App/`
